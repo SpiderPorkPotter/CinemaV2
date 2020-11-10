@@ -16,6 +16,13 @@ def home():
         year=datetime.now().year,
     )
 
+@app.route('/login')
+def login():
+    return render_template(
+        'login.html',
+        
+    )
+
 @app.route('/contact')
 def contact():
     """Renders the contact page."""
