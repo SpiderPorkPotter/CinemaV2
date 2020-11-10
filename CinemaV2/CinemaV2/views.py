@@ -16,10 +16,13 @@ def home():
         year=datetime.now().year,
     )
 
-@app.route('/login')
-def login():
+@app.route('/register')
+def register():
     return render_template(
-        'login.html',
+        'register.html',
+        title = 'Register',
+        year = datetime.now().year,
+        message = 'La tua pagina di registrazione'
         
     )
 
