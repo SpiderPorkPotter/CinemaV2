@@ -2,4 +2,18 @@
 
 {% block content %}
 
-{% end block %}
+<h2>{{ title }}</h2>
+
+<form action="{{ url_for('login_processing') }}" method = "POST">
+    <div class="form-group">
+      <label for="Email">Indirizzo email</label>
+      <input type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="Inserisci l'email">
+    </div>
+    <div class="form-group">
+      <label for="Passwd">Password</label>
+      <input type="password" class="form-control" id="Passwd" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+  {% endblock %}

@@ -16,15 +16,27 @@ def home():
         year=datetime.now().year,
     )
 
+@app.route('/login_page')
+def login_page():
+    return render_template(
+        'login.html',
+        title = 'Effettua il login'
+    )
+
 @app.route('/register')
 def register():
     return render_template(
         'register.html',
-        title = 'Register',
-        year = datetime.now().year,
-        message = 'La tua pagina di registrazione'
-        
+        title = 'Registrazione'  
     )
+@app.route('/registration_processing')
+def registration_processing():
+    print("yeeeeeeeee sei registrato")
+
+""" parte che processa i dati del login"""
+@app.route('/login_processing')
+def login_processing():
+    print("yeeeeeeeee sei loggato")
 
 @app.route('/contact')
 def contact():
