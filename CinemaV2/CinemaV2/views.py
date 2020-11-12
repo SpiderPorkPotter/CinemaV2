@@ -3,8 +3,8 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import render_template
-from CinemaV2 import app
+from flask import render_template, redirect, request, url_for
+from . import app
 
 @app.route('/')
 @app.route('/home')
@@ -29,14 +29,16 @@ def register():
         'register.html',
         title = 'Registrazione'  
     )
+
+#route per la registrazione di un utente
 @app.route('/registration_processing')
 def registration_processing():
-    print("yeeeeeeeee sei registrato")
-
-""" parte che processa i dati del login"""
+    return '<h2>yeeeeeeeee sei registrato</h2>'
+    
+#route per il login di un utente
 @app.route('/login_processing')
 def login_processing():
-    print("yeeeeeeeee sei loggato")
+    return '<h2>yeeeeeeeee sei loggato</h2>'
 
 @app.route('/contact')
 def contact():
