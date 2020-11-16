@@ -8,7 +8,7 @@ from sqlalchemy import Boolean, Column, Date, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_login import UserMixin
+
 
 Base = declarative_base()
 metadata = Base.metadata

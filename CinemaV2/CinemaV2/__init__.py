@@ -1,8 +1,8 @@
 """
-The flask application package.
+Inizializzazione dell'applicazione
 """
 
 from flask import Flask
 app = Flask(__name__)
 
-import CinemaV2.views
+from . import views

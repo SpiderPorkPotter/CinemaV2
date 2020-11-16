@@ -3,8 +3,13 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
+from CinemaV2 import app
 from flask import render_template, redirect, request, url_for
-from . import app
+from flask_sqlalchemy import SQLAlchemy
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:password@localhost/cinemaDB'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 @app.route('/')
 @app.route('/home')
@@ -16,18 +21,20 @@ def home():
         year=datetime.now().year,
     )
 
+
 @app.route('/login_page')
 def login_page():
     return render_template(
         'login.html',
-        title = 'Effettua il login'
+        title='Effettua il login'
     )
+
 
 @app.route('/register')
 def register():
     return render_template(
         'register.html',
-        title = 'Registrazione'  
+        title='Registrazione'
     )
 
 #route per la registrazione di un utente
@@ -40,6 +47,7 @@ def registration_processing():
 def login_processing():
     return '<h2>yeeeeeeeee sei loggato</h2>'
 
+
 @app.route('/contact')
 def contact():
     """Renders the contact page."""
@@ -49,6 +57,7 @@ def contact():
         year=datetime.now().year,
         message='Your contact page.'
     )
+
 
 @app.route('/about')
 def about():
