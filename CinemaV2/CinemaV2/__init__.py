@@ -1,8 +1,13 @@
 """
 Inizializzazione dell'applicazione
 """
+import os
+from . import views
+from flask import Flask, LoginManager
 
-from flask import Flask
+
+
 app = Flask(__name__)
 
-from . import views
+app.config['SECRET_KEY'] = os.urandom(16)
+login = LoginManager(app)

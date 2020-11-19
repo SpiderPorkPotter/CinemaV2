@@ -4,7 +4,7 @@ Routes and views for the flask application.
 
 from datetime import datetime
 from CinemaV2 import app
-from flask import render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:password@localhost/cinemaDB'
@@ -21,13 +21,27 @@ def home():
         year=datetime.now().year,
     )
 
-
-@app.route('/login_page')
+""" se la richiesta per questa pagina
+viene effettuata con il metodo post, e quindi l'utente ha già inserito i dati
+e ha premuto invia, viene fatto il login. Altrimenti viene renderizzata la
+pagina di login normale (utente non loggatp) """
+@app.route('/login_page', methods = ['GET', 'POST'])
 def login_page():
-    return render_template(
-        'login.html',
-        title='Effettua il login'
-    )
+    if request.method == 'POST':
+        conn = engine.connect()
+        risp = conn.execute('SELECT password FROM Utenti WHERE email = ?',
+            [request.form['logEmail']])
+        veraPwd = rs.fetchone('password')
+        conn.close()
+        if(request.form['logPassword'] == veraPwd):
+            user = user_by_email(request.form['logEmail'])
+            login_user(user)
+            return redirect(url_for('home_adm'))
+        else:
+            return redirect(url_for('home'))
+    else:
+        return redirect(url_for('home'))
+
 
 
 @app.route('/register')
@@ -37,34 +51,18 @@ def register():
         title='Registrazione'
     )
 
-#route per la registrazione di un utente
-@app.route('/registration_processing')
-def registration_processing():
-    return '<h2>yeeeeeeeee sei registrato</h2>'
-    
-#route per il login di un utente
-@app.route('/login_processing')
-def login_processing():
-    return '<h2>yeeeeeeeee sei loggato</h2>'
+@app.route('/logout')
+@login_required
+def logout():
+   logout_user() #da implementare
+   return redirect(url_for('home'))
 
-
-@app.route('/contact')
-def contact():
-    """Renders the contact page."""
+#area riservata all'admin
+@app.route('/privata')
+def privata():
     return render_template(
-        'contact.html',
-        title='Contact',
+        'privata.html',
+        title='Area riservata',
         year=datetime.now().year,
-        message='Your contact page.'
-    )
-
-
-@app.route('/about')
-def about():
-    """Renders the about page."""
-    return render_template(
-        'about.html',
-        title='About',
-        year=datetime.now().year,
-        message='Your application description page.'
+        message='Da qui puoi gestire gli utenti'
     )
