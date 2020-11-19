@@ -3,9 +3,10 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from CinemaV2 import app
-from flask import Flask, render_template, redirect, request, url_for
-from flask_sqlalchemy import SQLAlchemy
+from . import app
+from app import db.py
+from flask import Flask, render_template, redirect, request, url_for, SQLAlchemy
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:password@localhost/cinemaDB'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -14,7 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 @app.route('/')
 @app.route('/home')
 def home():
-    """Renders the home page."""
+    """Renderizza la home page."""
     return render_template(
         'index.html',
         title='Home Page',

@@ -4,7 +4,7 @@
 #
 
 
-from sqlalchemy import Boolean, Column, Date, ForeignKey, Integer, String, Table, Time
+from flask import Boolean, Column, Date, ForeignKey, Integer, String, Table, Time
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -61,6 +61,18 @@ class Utenti(Base):
     
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+        def is_authenticated(self):
+        return True
+
+    def is_active(self):   
+        return True           
+
+    def is_anonymous(self):
+        return False          
+
+    def get_id(self):         
+        return str(self.id)
 
 
 class Proiezioni(Base):
