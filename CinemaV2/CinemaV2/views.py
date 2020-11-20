@@ -3,8 +3,7 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from . import app
-from app import db.py
+from . import app, db
 from flask import Flask, render_template, redirect, request, url_for, SQLAlchemy
 
 
