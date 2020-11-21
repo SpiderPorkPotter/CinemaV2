@@ -4,7 +4,7 @@
 
 <h2>{{ title }}</h2>
 
-<form action="{{ url_for('login_processing') }}" method = "POST">
+<form action="{{ url_for('login') }}" method = "POST">
     <div class="form-group">
       <label for="Email">Indirizzo email</label>
       <input type="email" name="logEmail" value="{{ request.form.email }}" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="Inserisci l'email">

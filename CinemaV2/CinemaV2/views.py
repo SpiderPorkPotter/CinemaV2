@@ -3,13 +3,20 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from . import app, db
+from . import app
 from flask import Flask, render_template, redirect, request, url_for, SQLAlchemy
+import psycopg2
+from .db import * #importa tutte le classi presenti in db.py
+# '.' = cartella corrente, db nome file 
+# scrivendo solo 'db' dà unresolved import
 
+#posizione del database che andremo a modificare
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:password@localhost/UCI Cinema'
+#commentato perché forse non serve
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:password@localhost/cinemaDB'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+#inizializza la connessione al database
+database = SQLAlchemy(app)
 
 @app.route('/')
 @app.route('/home')
@@ -25,8 +32,9 @@ def home():
 viene effettuata con il metodo post, e quindi l'utente ha già inserito i dati
 e ha premuto invia, viene fatto il login. Altrimenti viene renderizzata la
 pagina di login normale (utente non loggatp) """
-@app.route('/login_page', methods = ['GET', 'POST'])
-def login_page():
+@app.route('/login', methods = ['GET', 'POST'])
+def login():
+    #è un esempio, probabilmente non va un cazzo
     if request.method == 'POST':
         conn = engine.connect()
         risp = conn.execute('SELECT password FROM Utenti WHERE email = ?',
@@ -54,8 +62,7 @@ def register():
 @app.route('/logout')
 @login_required
 def logout():
-   logout_user() #da implementare
-   return redirect(url_for('home'))
+   pass
 
 #area riservata all'admin
 @app.route('/privata')
@@ -66,3 +73,11 @@ def privata():
         year=datetime.now().year,
         message='Da qui puoi gestire gli utenti'
     )
+
+
+#per connettersi al database.
+#l'idea è fare una funzione che si connette, esegue la query
+#chiude la connessione
+
+def esegui_query():
+    pass
